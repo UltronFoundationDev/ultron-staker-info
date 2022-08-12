@@ -2,10 +2,7 @@
 pragma solidity ^0.5.0;
 
 import "./Ownable.sol";
-
-contract StakersInterface {
-  function getStakerID(address addr) external view returns (uint256);
-}
+import "./IStakers.sol";
 
 contract StakerInfo is Ownable {
   mapping (uint => string) public stakerInfos;
@@ -23,7 +20,7 @@ contract StakerInfo is Ownable {
   event InfoUpdated(uint256 stakerID);
 
   function updateInfo(string calldata _configUrl) external {
-    StakersInterface stakersInterface = StakersInterface(stakerContractAddress);
+    IStakers stakersInterface = IStakers(stakerContractAddress);
 
     // Get staker ID from staker contract
     uint256 stakerID = stakersInterface.getStakerID(msg.sender);
