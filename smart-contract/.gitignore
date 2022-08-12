@@ -263,3 +263,11 @@ $RECYCLE.BIN/
 # End of https://www.gitignore.io/api/node,macos,windows,solidity,soliditytruffle,visualstudiocode
 
 .secret
+
+# Hardhat
+typechain
+typechain-types
+artifacts
+cache
+coverage
+coverage.json

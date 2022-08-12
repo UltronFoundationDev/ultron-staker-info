@@ -1,20 +1,44 @@
 {
-  "name": "fantom-staker-info-smart-contract",
+  "name": "ultron-staker-info-smart-contract",
   "version": "1.0.0",
-  "description": "A dApp on the Fantom Opera network to browse information about its validators.",
   "main": "truffle-config.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "truffle build",
+    "test": "truffle test",
+    "truffle": "truffle"
   },
-  "author": "Christian Lanz <christian.lanz@block42.tech>",
   "license": "MIT",
   "dependencies": {
+    "npm": "^7.6.3",
+    "truffle": "^5.5.14",
     "truffle-hdwallet-provider": "^1.0.17",
     "ganache-cli": "^6.8.1",
+    "web3": "^1.2.4",
     "mocha": "^7.0.0",
-    "web3": "^1.2.4"
+    "@nomiclabs/hardhat-ethers": "^2.0.6",
+    "@nomiclabs/hardhat-etherscan": "^3.1.0",
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "@typechain/hardhat": "^6.1.2",
+    "dotenv": "^8.2.0",
+    "hardhat-contract-sizer": "^2.5.1",
+    "hardhat-gas-reporter": "^1.0.8"
+  },
+  "devDependencies": {
+    "@openzeppelin/contracts": "^2.5.1",
+    "chai": "^4.3.4",
+    "ethereumjs-testrpc-sc": "^6.5.1-sc.0",
+    "ethereum-waffle": "^3.0.0",
+    "ethers": "^5.0.14",
+    "lodash": "^4.17.15",
+    "openzeppelin-test-helpers": "^0.4.3",
+    "solhint": "^3.3.4",
+    "solidity-coverage": "^0.7.15",
+    "truffle-flattener": "^1.5.0",
+    "truffle-plugin-verify": "^0.4.0",
+    "ts-node": "^10.8.1",
+    "web3-utils": "^1.2.1"
   }
 }

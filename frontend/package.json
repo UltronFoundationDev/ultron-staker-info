@@ -1,12 +1,10 @@
 {
-  "name": "fantom-staker-info-frontend",
+  "name": "ultron-staker-info-frontend",
   "version": "1.3.0",
-  "description": "A dApp on the Fantom Opera network to browse information about its validators.",
   "scripts": {
     "dev": "lite-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Christian Lanz <christian.lanz@block42.tech>",
   "license": "MIT",
   "devDependencies": {
     "lite-server": "^2.5.4"
