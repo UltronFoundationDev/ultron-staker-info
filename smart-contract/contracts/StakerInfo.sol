@@ -1,40 +1,40 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.5.0;
 
-import "./Ownable.sol";
-import "./IStakers.sol";
+import "./ownership/Ownable.sol";
+import "./ISFC.sol";
 
 contract StakerInfo is Ownable {
   mapping (uint => string) public stakerInfos;
 
-  address internal stakerContractAddress;
+  address internal sfcContractAddress;
 
-  constructor(address _stakerContractAddress) public {
-    stakerContractAddress = _stakerContractAddress;
+  constructor(address _sfcContractAddress) public {
+    sfcContractAddress = _sfcContractAddress;
   }
 
-  function updateStakerContractAddress(address _stakerContractAddress) external onlyOwner {
-    stakerContractAddress = _stakerContractAddress;
+  function updateStakerContractAddress(address _sfcContractAddress) external onlyOwner {
+    sfcContractAddress = _sfcContractAddress;
   }
 
   event InfoUpdated(uint256 stakerID);
 
   function updateInfo(string calldata _configUrl) external {
-    IStakers stakersInterface = IStakers(stakerContractAddress);
+    ISFC sfc = ISFC(sfcContractAddress);
 
-    // Get staker ID from staker contract
-    uint256 stakerID = stakersInterface.getStakerID(msg.sender);
+    // Get validator Id from sfc
+    uint256 validatorId = sfc.getValidatorID(msg.sender);
 
     // Check if address belongs to a staker
-    require(stakerID != 0, "Address does not belong to a staker!");
+    require(validatorId != 0, "Address does not belong to a staker!");
 
     // Update config url
-    stakerInfos[stakerID] = _configUrl;
+    stakerInfos[validatorId] = _configUrl;
 
-    emit InfoUpdated(stakerID);
+    emit InfoUpdated(validatorId);
   }
 
-  function getInfo(uint256 _stakerID) external view returns (string memory) {
-    return stakerInfos[_stakerID];
+  function getInfo(uint256 _validatorId) external view returns (string memory) {
+    return stakerInfos[_validatorId];
   }
 }
