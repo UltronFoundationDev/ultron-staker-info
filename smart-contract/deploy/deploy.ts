@@ -13,6 +13,21 @@ task("deploy", "Deploy StakerInfo")
         console.log("StakerInfo deployed to:", stakerInfo.address);
     });
 
+task("update-info", "Updating cfg info")
+    .setAction(async (taskArgs, {ethers}) => {
+        const signer = (await ethers.getSigners())[0];
+
+        //testnet: 0x33F0C573e9415497D30FB7C1bd4632b2F27dC689
+        const stakerInfoAddress = '0x33F0C573e9415497D30FB7C1bd4632b2F27dC689';
+        const stakerInfo = await ethers.getContractAt("StakerInfo", stakerInfoAddress, signer);
+
+        const cfgUrl = '';
+        
+        await stakerInfo.updateInfo(cfgUrl);
+        await Helpers.delay(4000);
+        console.log(await stakerInfo.getInfo(1))
+    });
+
 task("change-owner", "Transfer ownership")
     .setAction(async (taskArgs, {ethers}) => {
         const signer = (await ethers.getSigners())[0];
