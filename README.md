@@ -1,23 +1,3 @@
-## Fantom Staker Info
-
-<div>
-  <a href="#">
-    <img src="https://img.shields.io/badge/language-solidity-green.svg" alt="Language" />
-  </a>
-  <a href="https://ftmscan.com/address/0x92ffad75b8a942d149621a39502cdd8ad1dd57b4#code">
-    <img src="https://img.shields.io/badge/network-fantom-3478ef.svg" alt="Fantom" />
-  </a>
-  <a href="https://fantomstaker.info">
-    <img src="https://img.shields.io/badge/dapp-live-brightgreen.svg" alt="dApp" />
-  </a>
-  <a href="https://t.me/block42_fantom">
-    <img src="https://img.shields.io/badge/contact-telegram-0088cc.svg" alt="Telegram" />
-  </a>
-  <a href="#">
-    <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License" />
-  </a>
-</div>
-
 ## Why
 
 Ultron delegators have a hard time finding the right validators to delegator their ULX to. The community started some efforts to create more transparency and collect more information about validators but nothing was nice and easy to use. There also were issues keeping the data up-to-date because it was maintained in a centralized manner.
@@ -29,13 +9,21 @@ A small backend application continously fetches all the validator data (to take 
 
 ## What
 
-The smart contract is already deployed and can be found on the Fantom Opera MainNet at the following address:
+The smart contract is already deployed and can be found on the Ultron MainNet at the following address:
 
 ```solidity
-0x92ffad75b8a942d149621a39502cdd8ad1dd57b4
+0x33F0C573e9415497D30FB7C1bd4632b2F27dC689
 ```
 
-FTMScan: [https://ftmscan.com/address/0x92ffad75b8a942d149621a39502cdd8ad1dd57b4](https://ftmscan.com/address/0x92ffad75b8a942d149621a39502cdd8ad1dd57b4)
+ULXScan: [https://ulxscan.com/address/0x33F0C573e9415497D30FB7C1bd4632b2F27dC689](https://ulxscan.com/address/0x33F0C573e9415497D30FB7C1bd4632b2F27dC689)
+
+The smart contract is already deployed and can be found on the Ultron TestNet at the following address:
+
+```solidity
+0x33F0C573e9415497D30FB7C1bd4632b2F27dC689
+```
+
+ULX_TestNet_Scan: [https://explorer.ultron-dev.io/address/0x33F0C573e9415497D30FB7C1bd4632b2F27dC689](https://explorer.ultron-dev.io/address/0x33F0C573e9415497D30FB7C1bd4632b2F27dC689)
 
 ### How it looks like
 
@@ -60,10 +48,10 @@ Create a config file in `JSON` format that contains the following parameters (yo
 /* It could look something like this 👇 */
 
 {
-  "name": "block42",
-  "logoUrl": "https://files.b42.tech/fantom/block42.png",
-  "website": "https://block42.tech",
-  "contact": "https://t.me/block42_fantom"
+  "name": "Ultron Foundation",
+  "logoUrl": "https://ulxscan.com/img/ultron-logo.png",
+  "website": "https://ultron.foundation",
+  "contact": "https://www.instagram.com/ultron.foundation"
 }
 ```
 
@@ -76,8 +64,8 @@ Then host it somewhere so it is publicly accessible!
 3. Load the StakerInfo contract ABI and instantiate the contract
 
 ```solidity
-abi = JSON.parse('[{"inputs":[{"internalType":"address","name":"_stakerContractAddress","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"stakerID","type":"uint256"}],"name":"InfoUpdated","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"constant":true,"inputs":[],"name":"isOwner","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"renounceOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"stakerInfos","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"_stakerContractAddress","type":"address"}],"name":"updateStakerContractAddress","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"string","name":"_configUrl","type":"string"}],"name":"updateInfo","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"_stakerID","type":"uint256"}],"name":"getInfo","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"}]')
-stakerInfoContract = web3.ftm.contract(abi).at("0x92ffad75b8a942d149621a39502cdd8ad1dd57b4")
+abi = JSON.parse('[{"constant":true,"inputs":[{"name":"_validatorId","type":"uint256"}],"name":"getInfo","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"stakerInfos","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"renounceOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"isOwner","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_configUrl","type":"string"}],"name":"updateInfo","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_sfcContractAddress","type":"address"}],"name":"updateStakerContractAddress","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"_sfcContractAddress","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"stakerID","type":"uint256"}],"name":"InfoUpdated","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"previousOwner","type":"address"},{"indexed":true,"name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"}]')
+stakerInfoContract = web3.ulx.contract(abi).at("0x33F0C573e9415497D30FB7C1bd4632b2F27dC689")
 ```
 
 4. Call the `updateInfo` function of the StakerInfo contract (make sure you have enough FTM on your wallet to cover the transaction fee)
@@ -91,7 +79,7 @@ stakerInfoContract.updateInfo("CONFIG_URL", { from: "VALIDATOR_ADDRESS" })
 
 ```solidity
 stakerInfoContract.getInfo(STAKER_ID)
-// e.g.: stakerInfoContract.getInfo(14)
+// e.g.: stakerInfoContract.getInfo(1)
 ```
 
 ## Support

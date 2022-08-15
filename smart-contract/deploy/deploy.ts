@@ -21,7 +21,7 @@ task("update-info", "Updating cfg info")
         const stakerInfoAddress = '0x33F0C573e9415497D30FB7C1bd4632b2F27dC689';
         const stakerInfo = await ethers.getContractAt("StakerInfo", stakerInfoAddress, signer);
 
-        const cfgUrl = '';
+        const cfgUrl = 'https://files.b42.tech/fantom/config.json';
         
         await stakerInfo.updateInfo(cfgUrl);
         await Helpers.delay(4000);
