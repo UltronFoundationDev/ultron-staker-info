@@ -1,18 +1,21 @@
 const assert = require("assert");
+const { BigNumber } = require("ethers");
 const ganache = require("ganache-cli");
 const Web3 = require("web3");
 const web3 = new Web3(ganache.provider());
 
-const StakersContract = artifacts.require("./contracts/Stakers.sol");
+const SfcContract = artifacts.require("./contracts/SFC.sol");
 const StakerInfoContract = artifacts.require("./contracts/StakerInfo.sol");
 
-contract('StakerInfo', async () => {
+contract('StakerInfo', async (accounts) => {
+  console.log(accounts)
+  const owner = accounts[0];
   it("should fail to create a staker", async () => {
-    const contract = await StakersContract.deployed();
+    const contract = await SfcContract.deployed();
 
     let success = true;
     try {
-      await contract.createStake(web3.utils.toHex(""), { value: web3.utils.toWei("0.5") });
+      await contract.createValidator(owner, { value: web3.utils.toWei("1000000") });
     } catch (error) {
       success = false;
     }
@@ -21,9 +24,10 @@ contract('StakerInfo', async () => {
   })
 
   it("should successfully create a staker", async () => {
-    const contract = await StakersContract.deployed();
-    await contract.createStake(web3.utils.toHex(""), { value: web3.utils.toWei("1") });
-    const stakersNum = await contract.stakersNum();
+    const contract = await SfcContract.deployed();
+    await contract.initialize(Math.round(Date.now() / 1000), BigNumber.from("10000000000"), owner, owner);
+    await contract.createValidator(owner, { value: web3.utils.toWei("1000000") });
+    const stakersNum = await contract.lastValidatorID();
     assert(stakersNum == 1);
   })
 
