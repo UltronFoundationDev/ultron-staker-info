@@ -1,5 +1,8 @@
 import { subtask, task, types } from "hardhat/config";
 import * as Helpers from './helpers';
+import * as fs from 'fs';
+
+const fileName: string = 'wallets.txt';
 
 task("deploy", "Deploy StakerInfo")
   .setAction(async (taskArgs, {ethers}) => {
@@ -27,11 +30,15 @@ task("update-info", "Updating cfg info")
 
         const stakerInfo = await ethers.getContractAt("StakerInfo", stakerInfoAddress, signer);
 
-        const cfgUrl = 'https://files.b42.tech/fantom/config.json';
+        const validators = fs.readFileSync(`${fileName}`, { encoding: 'utf-8' }).split('\n');
         
-        await stakerInfo.updateInfo(cfgUrl);
-        await Helpers.delay(4000);
-        console.log(await stakerInfo.getInfo(1))
+        for(let i:number = 1; i <= validators.length; i++) {
+            let cfgUrl = `https://github.com/UltronFoundationDev/ultron-staker-info/blob/main/configs/Validator${i}.json`;
+            console.log(cfgUrl);
+            await stakerInfo.updateInfo(cfgUrl);
+            await Helpers.delay(4000);
+            console.log(await stakerInfo.getInfo(i))
+        }
     });
 
 task("change-owner", "Transfer ownership")
