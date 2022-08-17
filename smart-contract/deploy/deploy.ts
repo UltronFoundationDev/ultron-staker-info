@@ -18,7 +18,7 @@ task("update-info", "Updating cfg info")
         const signer = (await ethers.getSigners())[0];
 
         //testnet: 0x33F0C573e9415497D30FB7C1bd4632b2F27dC689
-        const stakerInfoAddress = '0x33F0C573e9415497D30FB7C1bd4632b2F27dC689';
+        const stakerInfoAddress = '0x8346c42d1023BAfA955fF3623c96d54982AB8b0F';
         const stakerInfo = await ethers.getContractAt("StakerInfo", stakerInfoAddress, signer);
 
         const cfgUrl = 'https://files.b42.tech/fantom/config.json';
@@ -32,7 +32,8 @@ task("change-owner", "Transfer ownership")
     .setAction(async (taskArgs, {ethers}) => {
         const signer = (await ethers.getSigners())[0];
 
-        const stakerInfoAddress = '0x9F8eFbc1A35f9D5941efEA8F8aD30703e667F009';
+        //testnet: 0x33F0C573e9415497D30FB7C1bd4632b2F27dC689
+        const stakerInfoAddress = '0x8346c42d1023BAfA955fF3623c96d54982AB8b0F';
         const stakerInfo = await ethers.getContractAt("StakerInfo", stakerInfoAddress, signer);
 
         const owner = '0x4CE535D6E2D47690e33CA646972807BeB264dFBf';

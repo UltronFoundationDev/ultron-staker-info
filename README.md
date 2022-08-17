@@ -12,10 +12,10 @@ A small backend application continously fetches all the validator data (to take 
 The smart contract is already deployed and can be found on the Ultron MainNet at the following address:
 
 ```solidity
-0x33F0C573e9415497D30FB7C1bd4632b2F27dC689
+0x8346c42d1023BAfA955fF3623c96d54982AB8b0F
 ```
 
-ULXScan: [https://ulxscan.com/address/0x33F0C573e9415497D30FB7C1bd4632b2F27dC689](https://ulxscan.com/address/0x33F0C573e9415497D30FB7C1bd4632b2F27dC689)
+ULXScan: [https://ulxscan.com/address/0x8346c42d1023BAfA955fF3623c96d54982AB8b0F](https://ulxscan.com/address/0x8346c42d1023BAfA955fF3623c96d54982AB8b0F)
 
 The smart contract is already deployed and can be found on the Ultron TestNet at the following address:
 
