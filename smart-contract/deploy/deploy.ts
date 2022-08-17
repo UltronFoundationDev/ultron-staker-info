@@ -14,11 +14,17 @@ task("deploy", "Deploy StakerInfo")
     });
 
 task("update-info", "Updating cfg info")
-    .setAction(async (taskArgs, {ethers}) => {
+    .setAction(async (taskArgs, {ethers, network}) => {
         const signer = (await ethers.getSigners())[0];
 
-        //testnet: 0x33F0C573e9415497D30FB7C1bd4632b2F27dC689
-        const stakerInfoAddress = '0x8346c42d1023BAfA955fF3623c96d54982AB8b0F';
+        let stakerInfoAddress;
+        if(network.name === "ultron") {
+            stakerInfoAddress = '0x8346c42d1023BAfA955fF3623c96d54982AB8b0F';
+        }
+        else if(network.name === "ultron_testnet") {
+            stakerInfoAddress = '0x33F0C573e9415497D30FB7C1bd4632b2F27dC689'
+        }
+
         const stakerInfo = await ethers.getContractAt("StakerInfo", stakerInfoAddress, signer);
 
         const cfgUrl = 'https://files.b42.tech/fantom/config.json';
@@ -29,11 +35,17 @@ task("update-info", "Updating cfg info")
     });
 
 task("change-owner", "Transfer ownership")
-    .setAction(async (taskArgs, {ethers}) => {
+    .setAction(async (taskArgs, {ethers, network}) => {
         const signer = (await ethers.getSigners())[0];
 
-        //testnet: 0x33F0C573e9415497D30FB7C1bd4632b2F27dC689
-        const stakerInfoAddress = '0x8346c42d1023BAfA955fF3623c96d54982AB8b0F';
+        let stakerInfoAddress;
+        if(network.name === "ultron") {
+            stakerInfoAddress = '0x8346c42d1023BAfA955fF3623c96d54982AB8b0F';
+        }
+        else if(network.name === "ultron_testnet") {
+            stakerInfoAddress = '0x33F0C573e9415497D30FB7C1bd4632b2F27dC689'
+        }
+        
         const stakerInfo = await ethers.getContractAt("StakerInfo", stakerInfoAddress, signer);
 
         const owner = '0x4CE535D6E2D47690e33CA646972807BeB264dFBf';
