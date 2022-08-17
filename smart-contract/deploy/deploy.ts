@@ -17,12 +17,12 @@ task("update-info", "Updating cfg info")
     .setAction(async (taskArgs, {ethers, network}) => {
         const signer = (await ethers.getSigners())[0];
 
-        let stakerInfoAddress;
+        let stakerInfoAddress = '';
         if(network.name === "ultron") {
             stakerInfoAddress = '0x8346c42d1023BAfA955fF3623c96d54982AB8b0F';
         }
         else if(network.name === "ultron_testnet") {
-            stakerInfoAddress = '0x33F0C573e9415497D30FB7C1bd4632b2F27dC689'
+            stakerInfoAddress = '0x33F0C573e9415497D30FB7C1bd4632b2F27dC689';
         }
 
         const stakerInfo = await ethers.getContractAt("StakerInfo", stakerInfoAddress, signer);
@@ -38,12 +38,12 @@ task("change-owner", "Transfer ownership")
     .setAction(async (taskArgs, {ethers, network}) => {
         const signer = (await ethers.getSigners())[0];
 
-        let stakerInfoAddress;
+        let stakerInfoAddress = '';
         if(network.name === "ultron") {
             stakerInfoAddress = '0x8346c42d1023BAfA955fF3623c96d54982AB8b0F';
         }
         else if(network.name === "ultron_testnet") {
-            stakerInfoAddress = '0x33F0C573e9415497D30FB7C1bd4632b2F27dC689'
+            stakerInfoAddress = '0x33F0C573e9415497D30FB7C1bd4632b2F27dC689';
         }
         
         const stakerInfo = await ethers.getContractAt("StakerInfo", stakerInfoAddress, signer);
