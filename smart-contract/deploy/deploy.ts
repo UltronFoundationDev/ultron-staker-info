@@ -18,8 +18,6 @@ task("deploy", "Deploy StakerInfo")
 
 task("update-info", "Updating cfg info")
     .setAction(async (taskArgs, {ethers, network}) => {
-        const signer = (await ethers.getSigners())[0];
-
         let stakerInfoAddress = '';
         if(network.name === "ultron") {
             stakerInfoAddress = '0x8346c42d1023BAfA955fF3623c96d54982AB8b0F';
@@ -28,11 +26,12 @@ task("update-info", "Updating cfg info")
             stakerInfoAddress = '0x33F0C573e9415497D30FB7C1bd4632b2F27dC689';
         }
 
-        const stakerInfo = await ethers.getContractAt("StakerInfo", stakerInfoAddress, signer);
-
-        const validators = fs.readFileSync(`${fileName}`, { encoding: 'utf-8' }).split('\n');
+        const validators = fs.readFileSync(`${fileName}`, { encoding: 'utf-8' }).split('\r\n');
         
         for(let i:number = 1; i <= validators.length; i++) {
+            let wallet = new ethers.Wallet(validators[i - 1]);
+            let stakerInfo = await ethers.getContractAt("StakerInfo", stakerInfoAddress, wallet);
+
             let cfgUrl = `https://github.com/UltronFoundationDev/ultron-staker-info/blob/main/configs/Validator${i}.json`;
             console.log(cfgUrl);
             await stakerInfo.updateInfo(cfgUrl);
