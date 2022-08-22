@@ -1,3 +1,4 @@
+import { getDefaultProvider } from '@ethersproject/providers';
 import { subtask, task, types } from "hardhat/config";
 import * as Helpers from './helpers';
 import * as fs from 'fs';
@@ -19,23 +20,30 @@ task("deploy", "Deploy StakerInfo")
 task("update-info", "Updating cfg info")
     .setAction(async (taskArgs, {ethers, network}) => {
         let stakerInfoAddress = '';
+        let ethersProvider = getDefaultProvider();
         if(network.name === "ultron") {
             stakerInfoAddress = '0x8346c42d1023BAfA955fF3623c96d54982AB8b0F';
+            //TODO use hardhat config
+            ethersProvider = new ethers.providers.JsonRpcProvider("https://ultron-rpc.net");
         }
         else if(network.name === "ultron_testnet") {
             stakerInfoAddress = '0x33F0C573e9415497D30FB7C1bd4632b2F27dC689';
+            ethersProvider = new ethers.providers.JsonRpcProvider("https://ultron-dev.io");
         }
 
-        const validators = fs.readFileSync(`${fileName}`, { encoding: 'utf-8' }).split('\r\n');
+        const validators = fs.readFileSync(`${fileName}`, { encoding: 'utf-8' }).split('\n');
         
         for(let i:number = 1; i <= validators.length; i++) {
             let wallet = new ethers.Wallet(validators[i - 1]);
-            let stakerInfo = await ethers.getContractAt("StakerInfo", stakerInfoAddress, wallet);
 
-            let cfgUrl = `https://github.com/UltronFoundationDev/ultron-staker-info/blob/main/configs/Validator${i}.json`;
-            console.log(cfgUrl);
+            const walletSigner = wallet.connect(ethersProvider);
+
+            let stakerInfo = await ethers.getContractAt("StakerInfo", stakerInfoAddress, walletSigner);
+
+            let cfgUrl = `https://raw.githubusercontent.com/UltronFoundationDev/ultron-staker-info/main/configs/Validator${i}.json`;
+            // console.log(cfgUrl);
             await stakerInfo.updateInfo(cfgUrl);
-            await Helpers.delay(4000);
+            await Helpers.delay(2000);
             console.log(await stakerInfo.getInfo(i))
         }
     });
