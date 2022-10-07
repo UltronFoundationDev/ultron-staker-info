@@ -56,6 +56,27 @@ task("update-info", "Updating cfg info")
         }
     });
 
+task("get-info", "Get validator cfg info")
+    .addParam("id", "Validator id")
+    .setAction(async (taskArgs, {ethers, network}) => {
+
+        let stakerInfoAddress = '';
+        let ethersProvider = getDefaultProvider();
+        if(network.name === "ultron") {
+            stakerInfoAddress = '0x8346c42d1023BAfA955fF3623c96d54982AB8b0F';
+            //TODO use hardhat config
+            ethersProvider = new ethers.providers.JsonRpcProvider("https://ultron-rpc.net");
+        }
+        else if(network.name === "ultron_testnet") {
+            stakerInfoAddress = '0x33F0C573e9415497D30FB7C1bd4632b2F27dC689';
+            ethersProvider = new ethers.providers.JsonRpcProvider("https://ultron-dev.io");
+        }
+
+        let stakerInfo = await ethers.getContractAt("StakerInfo", stakerInfoAddress);
+
+        console.log(`Validator id ${taskArgs.id}:`, await stakerInfo.getInfo(taskArgs.id))
+    });
+
 task("change-owner", "Transfer ownership")
     .setAction(async (taskArgs, {ethers, network}) => {
         const signer = (await ethers.getSigners())[0];
