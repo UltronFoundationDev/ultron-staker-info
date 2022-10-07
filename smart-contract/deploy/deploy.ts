@@ -21,26 +21,34 @@ task("update-info", "Updating cfg info")
     .setAction(async (taskArgs, {ethers, network}) => {
         let stakerInfoAddress = '';
         let ethersProvider = getDefaultProvider();
+        let rootPath = ''
+
         if(network.name === "ultron") {
             stakerInfoAddress = '0x8346c42d1023BAfA955fF3623c96d54982AB8b0F';
             //TODO use hardhat config
             ethersProvider = new ethers.providers.JsonRpcProvider("https://ultron-rpc.net");
+            rootPath = 'https://raw.githubusercontent.com/UltronFoundationDev/ultron-staker-info/main/configs'
         }
         else if(network.name === "ultron_testnet") {
             stakerInfoAddress = '0x33F0C573e9415497D30FB7C1bd4632b2F27dC689';
             ethersProvider = new ethers.providers.JsonRpcProvider("https://ultron-dev.io");
+            rootPath = 'https://raw.githubusercontent.com/UltronFoundationDev/ultron-staker-info/main/configs/testnet'
         }
 
         const validators = fs.readFileSync(`${fileName}`, { encoding: 'utf-8' }).split('\n');
         
         for(let i:number = 1; i <= validators.length; i++) {
+            if (!validators[i-1]) {
+                continue;
+            }
+
             let wallet = new ethers.Wallet(validators[i - 1]);
 
             const walletSigner = wallet.connect(ethersProvider);
 
             let stakerInfo = await ethers.getContractAt("StakerInfo", stakerInfoAddress, walletSigner);
 
-            let cfgUrl = `https://raw.githubusercontent.com/UltronFoundationDev/ultron-staker-info/main/configs/Validator${i}.json`;
+            let cfgUrl = `${rootPath}/Validator${i}.json`;
             // console.log(cfgUrl);
             await stakerInfo.updateInfo(cfgUrl);
             await Helpers.delay(2000);
