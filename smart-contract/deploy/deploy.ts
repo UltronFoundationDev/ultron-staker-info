@@ -68,3 +68,20 @@ task("change-owner", "Transfer ownership")
         await Helpers.delay(4000);
         console.log(await stakerInfo.owner())
     });
+
+task("update-reward", "updateBaseRewardPerSecond")
+  .setAction(async (taskArgs, {ethers}) => {
+        const signer = (await ethers.getSigners())[0];
+
+        const sfcAddress = '0xfc00face00000000000000000000000000000000';
+        const sfc = await ethers.getContractAt("SFC", sfcAddress, signer);
+        let perSecond = await sfc.baseRewardPerSecond();
+        console.log(`Before perSecond: ${perSecond}`);
+        
+        const newPerSecond = ethers.utils.parseEther("1");
+        await sfc.updateBaseRewardPerSecond(newPerSecond);
+
+        await Helpers.delay(2000);
+        perSecond = await sfc.baseRewardPerSecond();
+        console.log(`After perSecond: ${perSecond}`)
+    });
