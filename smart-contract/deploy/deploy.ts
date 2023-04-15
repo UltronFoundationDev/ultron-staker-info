@@ -97,12 +97,13 @@ task("update-reward", "updateBaseRewardPerSecond")
         const sfcAddress = '0xfc00face00000000000000000000000000000000';
         const sfc = await hre.ethers.getContractAt("SFC", sfcAddress, signer);
         let perSecond = await sfc.baseRewardPerSecond();
-        console.log(`Before perSecond: ${perSecond}`);
+        console.log(`Before perSecond: ${hre.ethers.utils.formatEther(perSecond)}`);
         
-        // const newPerSecond = hre.ethers.utils.parseEther("1");
-        // await sfc.updateBaseRewardPerSecond(newPerSecond);
+        // const newPerSecond = hre.ethers.utils.parseEther("5");
+        // console.log(`Setting newPerSecond: ${hre.ethers.utils.formatEther(newPerSecond)}`);
+        // const res = await sfc.updateBaseRewardPerSecond(newPerSecond);
 
         await Helpers.delay(2000);
         perSecond = await sfc.baseRewardPerSecond();
-        console.log(`After perSecond: ${perSecond}`)
+        console.log(`After perSecond: ${hre.ethers.utils.formatEther(perSecond)}`)
     });
