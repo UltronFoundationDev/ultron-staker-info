@@ -58,29 +58,21 @@ Create a config file in `JSON` format that contains the following parameters (yo
 Then host it somewhere so it is publicly accessible!
 
 ### Update your info in the smart contract
-
-1. Connect to your validator node
-2. Open up a lachesis console session via `lachesis attach`
-3. Load the StakerInfo contract ABI and instantiate the contract
-
-```solidity
-abi = JSON.parse('[{"constant":true,"inputs":[{"name":"_validatorId","type":"uint256"}],"name":"getInfo","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"stakerInfos","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"renounceOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"isOwner","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_configUrl","type":"string"}],"name":"updateInfo","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_sfcContractAddress","type":"address"}],"name":"updateStakerContractAddress","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"_sfcContractAddress","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"stakerID","type":"uint256"}],"name":"InfoUpdated","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"previousOwner","type":"address"},{"indexed":true,"name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"}]')
-stakerInfoContract = web3.ulx.contract(abi).at("0x33F0C573e9415497D30FB7C1bd4632b2F27dC689")
+1. Create a `wallets.txt` file inside the `smart-contract/` directory.
+2. Put the private key of the validator into the `wallets.txt` file and save the file.
+3. To enter the working directory, open the terminal in the root project directory and execute the following command.:
+```script
+cd smart-contracts
+```
+4. To set up all required packages, execute the following command:
+```script
+yarn install
+```
+5. To update validator information within the StakerInfo smart contract on the mainnet, execute the following steps:
+```script
+yarn hardhat update-info --network ultron
 ```
 
-4. Call the `updateInfo` function of the StakerInfo contract (make sure you have enough FTM on your wallet to cover the transaction fee)
-
-```solidity
-stakerInfoContract.updateInfo("CONFIG_URL", { from: "VALIDATOR_ADDRESS" })
-// e.g.: stakerInfoContract.updateInfo("https://files.b42.tech/fantom/config.json", { from: "0xa4ddde0afdaea05a3d5a2ec6b5c7f3fc9945020b" })
-```
-
-5. Validate if you updated your info correctly
-
-```solidity
-stakerInfoContract.getInfo(STAKER_ID)
-// e.g.: stakerInfoContract.getInfo(1)
-```
 
 ## Support
 
