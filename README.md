@@ -62,7 +62,7 @@ Then host it somewhere so it is publicly accessible!
 2. Put the private key of the validator into the `wallets.txt` file and save the file.
 3. To enter the working directory, open the terminal in the root project directory and execute the following command.:
 ```script
-cd smart-contracts
+cd smart-contract
 ```
 4. To set up all required packages, execute the following command:
 ```script
